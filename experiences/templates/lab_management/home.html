@@ -1,0 +1,95 @@
+{% extends "core/base.html" %}
+{% block content %}
+<style>
+    .container-exp{
+        padding:30px;
+    }
+
+    .card-exp{
+        display:inline-block;
+        width:250px;
+        background:white;
+        padding:20px;
+        margin:10px;
+        border-radius:10px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        text-align:center;
+    }
+
+    table.exp-table{
+        width:100%;
+        background:white;
+        border-collapse:collapse;
+        margin-top:20px;
+    }
+
+    table.exp-table th, table.exp-table td{
+        border:1px solid #ddd;
+        padding:10px;
+    }
+
+    table.exp-table th{
+        background:#0d6efd;
+        color:white;
+    }
+
+    .btn-exp{
+        background:#198754;
+        color:white;
+        padding:10px 15px;
+        text-decoration:none;
+        border-radius:5px;
+    }
+</style>
+
+<div class="container-exp">
+
+    <h1>Système de Gestion des Laboratoires</h1>
+
+    <div class="card-exp">
+        <h3>Expériences</h3>
+        <h2>{{ experiences.count }}</h2>
+    </div>
+
+    <div class="card-exp">
+        <h3>Publications</h3>
+        <h2>{{ publications.count }}</h2>
+    </div>
+
+    <div class="card-exp">
+        <h3>Résultats</h3>
+        <h2>{{ resultats.count }}</h2>
+    </div>
+
+    <br><br>
+
+<a href="{% url 'ajouter_publication' %}" class="btn-exp" style="margin-bottom: 20px; display: inline-block;">
+    Ajouter Publication
+</a>
+
+<a href="{% url 'ajouter_resultat' %}" class="btn-exp" style="margin-bottom: 20px; display: inline-block;">
+    Ajouter Résultat
+</a>
+
+    <h2>Liste des Publications</h2>
+
+    <table class="exp-table">
+
+        <tr>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Date</th>
+        </tr>
+
+        {% for publication in publications %}
+        <tr>
+            <td>{{ publication.titre }}</td>
+            <td>{{ publication.auteur }}</td>
+            <td>{{ publication.date_publication }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+{% endblock %}

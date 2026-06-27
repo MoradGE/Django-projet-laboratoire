@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+
+{% block title %}Supprimer responsable{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="h3 mb-1">Supprimer le responsable</h1>
+    <p class="text-muted mb-0">Confirmation de suppression.</p>
+</div>
+
+<div class="confirm-panel">
+    <p>Voulez-vous vraiment supprimer <strong>{{ responsable.prenom }} {{ responsable.nom }}</strong> ?</p>
+    <form method="post" class="d-flex gap-2">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirmer</button>
+        <a class="btn btn-outline-secondary" href="{% url 'laboratoire_detail' responsable.laboratoire.pk %}">Annuler</a>
+    </form>
+</div>
+{% endblock %}

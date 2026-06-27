@@ -1,0 +1,72 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Mon profil</h4>
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-3">
+                    <strong>Nom d'utilisateur :</strong>
+                    {{ user.username }}
+                </div>
+
+                <div class="mb-3">
+                    <strong>Nom complet :</strong>
+                    {{ user.first_name }} {{ user.last_name }}
+                </div>
+
+                <div class="mb-3">
+                    <strong>Email :</strong>
+                    {% if user.email %}
+                        {{ user.email }}
+                    {% else %}
+                        Non renseigné
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <strong>Rôle :</strong>
+
+                    {% if user.profil.role == "ADMIN" %}
+                        <span class="badge bg-danger">Admin</span>
+                    {% elif user.profil.role == "CHERCHEUR" %}
+                        <span class="badge bg-info text-dark">Chercheur</span>
+                    {% elif user.profil.role == "ETUDIANT" %}
+                        <span class="badge bg-warning text-dark">Étudiant</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ user.profil.role }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <strong>Compte actif :</strong>
+                    {% if user.is_active %}
+                        <span class="badge bg-success">Oui</span>
+                    {% else %}
+                        <span class="badge bg-danger">Non</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <strong>Date d'inscription :</strong>
+                    {{ user.date_joined|date:"d/m/Y H:i" }}
+                </div>
+
+                <a href="{% url 'users_dashboard' %}" class="btn btn-secondary">
+                    Retour au tableau de bord
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

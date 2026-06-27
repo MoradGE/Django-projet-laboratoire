@@ -1,0 +1,152 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="col-md-10 offset-md-1">
+
+{% if user.is_authenticated %}
+
+<h2 class="mb-4 text-center">Système de Gestion des Laboratoires</h2>
+<p class="text-center mb-2">
+    Bienvenue, <strong>{{ user.get_full_name|default:user.username }}</strong>
+    {% if user.profil %}
+        <span class="badge bg-info text-dark ms-1">{{ user.profil.role }}</span>
+    {% elif user.is_superuser %}
+        <span class="badge bg-danger ms-1">ADMIN</span>
+    {% endif %}
+</p>
+<p class="text-center text-muted mb-5">Choisissez un module pour commencer.</p>
+
+<div class="row g-4">
+
+    <div class="col-md-4">
+        <a href="{% url 'projets_dashboard' %}" class="text-decoration-none">
+            <div class="card h-100 shadow-sm" style="background-color: #185FA5; color: #E6F1FB;">
+                <div class="card-body text-center py-5">
+                    <h4 class="card-title">Projets de Recherche</h4>
+                    <p class="card-text mb-0" style="color: #B5D4F4;">Gestion des projets et chercheurs</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+<a href="{% url 'laboratoires_dashboard' %}" class="text-decoration-none">            <div class="card h-100 shadow-sm" style="background-color: #0F6E56; color: #E1F5EE;">
+                <div class="card-body text-center py-5">
+                    <h4 class="card-title">Laboratoires</h4>
+                    <p class="card-text mb-0" style="color: #9FE1CB;">Laboratoires, responsables et membres</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="{% url 'equipements_dashboard' %}" class="text-decoration-none">
+            <div class="card h-100 shadow-sm" style="background-color: #5F5E5A; color: #F1EFE8;">
+                <div class="card-body text-center py-5">
+                    <h4 class="card-title">Équipements</h4>
+                    <p class="card-text mb-0" style="color: #D3D1C7;">Inventaire et disponibilité</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="{% url 'tableau_bord_laboratoire' %}" class="text-decoration-none">
+            <div class="card h-100 shadow-sm" style="background-color: #854F0B; color: #FAEEDA;">
+                <div class="card-body text-center py-5">
+                    <h4 class="card-title">Réservations</h4>
+                    <p class="card-text mb-0" style="color: #FAC775;">Réservations de matériels</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="{% url 'experiences_home' %}" class="text-decoration-none">
+            <div class="card h-100 shadow-sm" style="background-color: #993C1D; color: #FAECE7;">
+                <div class="card-body text-center py-5">
+                    <h4 class="card-title">Expériences</h4>
+                    <p class="card-text mb-0" style="color: #F0997B;">Publications et résultats</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="{% url 'users_dashboard' %}" class="text-decoration-none">
+            <div class="card h-100 shadow-sm" style="background-color: #534AB7; color: #EEEDFE;">
+                <div class="card-body text-center py-5">
+                    <h4 class="card-title">Utilisateurs</h4>
+                    <p class="card-text mb-0" style="color: #CECBF6;">Gestion des comptes et rôles</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+<div class="row mt-5 mb-4">
+    <div class="col-12">
+        <p class="text-center text-muted" style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Équipes du projet</p>
+        <div class="row g-2 justify-content-center">
+            <div class="col-md-4">
+                <div class="border rounded p-2 px-3 h-100">
+                    <p class="mb-0" style="font-size: 13px; font-weight: 500;">Utilisateurs</p>
+                    <p class="mb-0 text-muted" style="font-size: 12px;">Bouzouf Fouad, Amallah Ilyas, Charki Rayhane</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border rounded p-2 px-3 h-100">
+                    <p class="mb-0" style="font-size: 13px; font-weight: 500;">Laboratoires</p>
+                    <p class="mb-0 text-muted" style="font-size: 12px;">Bouyaoumad Chaymae, Sellami Hanane</p>
+                </div>
+            </div>
+<div class="col-md-4">
+    <div class="border rounded p-2 px-3 h-100">
+        <p class="mb-0" style="font-size: 13px; font-weight: 500;">Équipements</p>
+        <p class="mb-0 text-muted" style="font-size: 12px;">El Bairi Asmae, El Azouzi Hanae, Khalifi Ikrame</p>
+    </div>
+</div>
+            <div class="col-md-4">
+                <div class="border rounded p-2 px-3 h-100">
+                    <p class="mb-0" style="font-size: 13px; font-weight: 500;">Réservations</p>
+                    <p class="mb-0 text-muted" style="font-size: 12px;">Kadiri Fatima Zahra, Serhrouchni Souhaila, Elmrabet Yasmina</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border rounded p-2 px-3 h-100">
+                    <p class="mb-0" style="font-size: 13px; font-weight: 500;">Projets de recherche</p>
+                    <p class="mb-0 text-muted" style="font-size: 12px;">Soussan Mohamed, Ouass Mohamed, Al Hammouti Younes</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border rounded p-2 px-3 h-100">
+                    <p class="mb-0" style="font-size: 13px; font-weight: 500;">Expériences</p>
+                    <p class="mb-0 text-muted" style="font-size: 12px;">El Hazzaoui Abir, Boutaqmani Zineb, El Mahkak Hajar</p>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-muted mt-3" style="font-size: 12px;">
+            Intégration et coordination du système : <strong>Mohamed Ouass</strong>
+        </p>
+    </div>
+</div>
+{% else %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <h1 class="mb-4">Login</h1>
+        <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" class="form-control" name="username" placeholder="Username" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-secondary">Login</button>
+        </form>
+    </div>
+</div>
+
+{% endif %}
+</div>
+{% endblock %}

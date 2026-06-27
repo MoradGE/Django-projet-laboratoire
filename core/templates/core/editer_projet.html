@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Modifier Projet</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Titre</label>
+            <input type="text" name="titre" class="form-control" value="{{ projet.titre }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="4" required>{{ projet.description }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Statut</label>
+            <select name="statut" class="form-select">
+                <option value="planifie" {% if projet.statut == 'planifie' %}selected{% endif %}>Planifié</option>
+                <option value="en_cours" {% if projet.statut == 'en_cours' %}selected{% endif %}>En cours</option>
+                <option value="suspendu" {% if projet.statut == 'suspendu' %}selected{% endif %}>Suspendu</option>
+                <option value="termine" {% if projet.statut == 'termine' %}selected{% endif %}>Terminé</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date Début</label>
+            <input type="date" name="date_debut" class="form-control" value="{{ projet.date_debut|date:'Y-m-d' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date Fin</label>
+            <input type="date" name="date_fin" class="form-control" value="{{ projet.date_fin|date:'Y-m-d' }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Budget</label>
+            <input type="number" name="budget" class="form-control" step="0.01" value="{{ projet.budget }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Chercheurs assignés</label>
+            <select name="chercheurs" class="form-select" multiple>
+                {% for c in chercheurs %}
+                <option value="{{ c.id }}" {% if c in projet.chercheurs.all %}selected{% endif %}>
+                    {{ c.prenom }} {{ c.nom }} — {{ c.specialite }}
+                </option>
+                {% endfor %}
+            </select>
+            <small class="text-muted">Ctrl+clic pour sélectionner plusieurs</small>
+        </div>
+        <button type="submit" class="btn btn-warning">Modifier</button>
+        <a href="{% url 'liste_projets' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+{% endblock %}

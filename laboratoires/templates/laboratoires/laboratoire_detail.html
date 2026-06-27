@@ -1,0 +1,115 @@
+{% extends "core/base.html" %}
+
+{% block title %}Details laboratoire{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div>
+        <h1 class="h3 mb-1">{{ laboratoire.nom_laboratoire }}</h1>
+        <p class="text-muted mb-0">{{ laboratoire.code_laboratoire }} - {{ laboratoire.domaine }}</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-outline-secondary" href="{% url 'laboratoire_update' laboratoire.pk %}">Modifier</a>
+        <a class="btn btn-outline-danger" href="{% url 'laboratoire_delete' laboratoire.pk %}">Supprimer</a>
+        <a class="btn btn-primary" href="{% url 'laboratoire_list' %}">Retour</a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="section-panel">
+            <h2 class="h5 mb-3">Informations</h2>
+            <dl class="row detail-list">
+                <dt class="col-sm-5">Code</dt>
+                <dd class="col-sm-7">{{ laboratoire.code_laboratoire }}</dd>
+                <dt class="col-sm-5">Domaine</dt>
+                <dd class="col-sm-7">{{ laboratoire.domaine }}</dd>
+                <dt class="col-sm-5">Localisation</dt>
+                <dd class="col-sm-7">{{ laboratoire.localisation }}</dd>
+                <dt class="col-sm-5">Date de creation</dt>
+                <dd class="col-sm-7">{{ laboratoire.date_creation }}</dd>
+                <dt class="col-sm-5">Statut</dt>
+                <dd class="col-sm-7"><span class="badge text-bg-secondary">{{ laboratoire.get_statut_display }}</span></dd>
+                <dt class="col-sm-5">Date d'ajout</dt>
+                <dd class="col-sm-7">{{ laboratoire.date_ajout|date:"d/m/Y H:i" }}</dd>
+            </dl>
+            <h3 class="h6 mt-4">Description</h3>
+            <p class="mb-0">{{ laboratoire.description|default:"Aucune description." }}</p>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="section-panel mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 mb-0">Responsables</h2>
+                <a class="btn btn-primary btn-sm" href="{% url 'responsable_create' %}?laboratoire={{ laboratoire.pk }}">Ajouter</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Fonction</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for responsable in responsables %}
+                            <tr>
+                                <td>{{ responsable.prenom }} {{ responsable.nom }}</td>
+                                <td>{{ responsable.email }}</td>
+                                <td>{{ responsable.fonction }}</td>
+                                <td class="text-end table-actions">
+                                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'responsable_update' responsable.pk %}">Modifier</a>
+                                    <a class="btn btn-outline-danger btn-sm" href="{% url 'responsable_delete' responsable.pk %}">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">Aucun responsable.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-panel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 mb-0">Membres</h2>
+                <a class="btn btn-primary btn-sm" href="{% url 'membre_create' %}?laboratoire={{ laboratoire.pk }}">Ajouter</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Role</th>
+                            <th>Niveau</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for membre in membres %}
+                            <tr>
+                                <td>{{ membre.prenom }} {{ membre.nom }}</td>
+                                <td>{{ membre.role }}</td>
+                                <td>{{ membre.get_niveau_display }}</td>
+                                <td class="text-end table-actions">
+                                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'membre_update' membre.pk %}">Modifier</a>
+                                    <a class="btn btn-outline-danger btn-sm" href="{% url 'membre_delete' membre.pk %}">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">Aucun membre.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

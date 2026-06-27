@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ proyecto.titre }}</h2>
+    <table class="table table-bordered mt-3">
+        <tr><th>Description</th><td>{{ projet.description }}</td></tr>
+        <tr><th>Statut</th><td>{{ projet.get_statut_display }}</td></tr>
+        <tr><th>Date Début</th><td>{{ projet.date_debut }}</td></tr>
+        <tr><th>Date Fin</th><td>{{ projet.date_fin|default:"-" }}</td></tr>
+        <tr><th>Budget</th><td>{{ projet.budget }} MAD</td></tr>
+        <tr><th>Créé le</th><td>{{ projet.created_at }}</td></tr>
+        <tr>
+            <th>Chercheurs</th>
+            <td>
+                {% for c in projet.chercheurs.all %}
+                    {{ c.prenom }} {{ c.nom }} ({{ c.specialite }}){% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    Aucun chercheur assigné
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+    <a href="{% url 'editer_projet' projet.id %}" class="btn btn-warning">Modifier</a>
+    <a href="{% url 'liste_projets' %}" class="btn btn-secondary">Retour</a>
+</div>
+{% endblock %}

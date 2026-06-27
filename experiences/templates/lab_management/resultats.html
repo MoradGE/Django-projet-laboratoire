@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<h2>Resultats</h2>
+
+<div class="row">
+    {% for r in resultats %}
+    <div class="col-md-6 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ r.titre }}</h5>
+                <p class="card-text">{{ r.description }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p class="text-center text-muted">
+            Aucun resultat disponible.
+        </p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

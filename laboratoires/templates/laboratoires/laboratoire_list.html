@@ -1,0 +1,49 @@
+{% extends "core/base.html" %}
+{% block title %}Laboratoires{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div>
+        <h1 class="h3 mb-1">Laboratoires</h1>
+        <p class="text-muted mb-0">Liste des laboratoires enregistres.</p>
+    </div>
+    <a class="btn btn-primary" href="{% url 'laboratoire_create' %}">Ajouter</a>
+</div>
+
+<div class="section-panel">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Code</th>
+                    <th>Domaine</th>
+                    <th>Localisation</th>
+                    <th>Statut</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for laboratoire in laboratoires %}
+                    <tr>
+                        <td>{{ laboratoire.nom_laboratoire }}</td>
+                        <td>{{ laboratoire.code_laboratoire }}</td>
+                        <td>{{ laboratoire.domaine }}</td>
+                        <td>{{ laboratoire.localisation }}</td>
+                        <td><span class="badge text-bg-secondary">{{ laboratoire.get_statut_display }}</span></td>
+                        <td class="text-end table-actions">
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'laboratoire_detail' laboratoire.pk %}">Details</a>
+                            <a class="btn btn-outline-secondary btn-sm" href="{% url 'laboratoire_update' laboratoire.pk %}">Modifier</a>
+                            <a class="btn btn-outline-danger btn-sm" href="{% url 'laboratoire_delete' laboratoire.pk %}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">Aucun laboratoire enregistre.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

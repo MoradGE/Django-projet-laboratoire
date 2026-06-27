@@ -1,0 +1,105 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2>Tableau de bord</h2>
+
+        <p class="mb-1">
+            Bienvenue,
+            <strong>{{ user.get_full_name|default:user.username }}</strong>.
+        </p>
+
+        <p>
+            Votre rôle :
+            <span class="badge bg-primary">{{ user.profil.role }}</span>
+        </p>
+
+        {% if user.is_superuser or user.profil.role == "ADMIN" %}
+
+            <div class="alert alert-success mt-4">
+                <h5>Espace Administrateur</h5>
+                <p class="mb-0">
+                    Vous pouvez gérer les utilisateurs du système :
+                    Admins, Chercheurs et Étudiants.
+                </p>
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-md-3 mb-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5>Total utilisateurs</h5>
+                            <h2>{{ total_users }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5>Admins</h5>
+                            <h2>{{ total_admins }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5>Chercheurs</h5>
+                            <h2>{{ total_chercheurs }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5>Étudiants</h5>
+                            <h2>{{ total_etudiants }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <a href="{% url 'user_list' %}" class="btn btn-dark mt-3">
+                Gérer les utilisateurs
+            </a>
+
+        {% elif user.profil.role == "CHERCHEUR" %}
+
+            <div class="alert alert-info mt-4">
+                <h5>Espace Chercheur</h5>
+                <p class="mb-0">
+                    Vous êtes connecté en tant que chercheur.
+                    Vous pourrez accéder aux modules liés aux projets de recherche,
+                    laboratoires et équipements lorsque ces modules seront intégrés.
+                </p>
+            </div>
+
+        {% elif user.profil.role == "ETUDIANT" %}
+
+            <div class="alert alert-warning mt-4">
+                <h5>Espace Étudiant</h5>
+                <p class="mb-0">
+                    Vous êtes connecté en tant qu'étudiant.
+                    Vous pourrez consulter les informations autorisées et accéder
+                    aux services étudiants lorsque les autres modules seront intégrés.
+                </p>
+            </div>
+
+        {% else %}
+
+            <div class="alert alert-secondary mt-4">
+                Rôle non reconnu.
+            </div>
+
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

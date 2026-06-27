@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Modifier équipement</h2>
+
+    <form method="POST" class="card p-4 shadow">
+        {% csrf_token %}
+
+        <input type="text" name="name" value="{{ equipment.name }}" class="form-control mb-2">
+
+        <input type="text" name="serial_number" value="{{ equipment.serial_number }}" class="form-control mb-2">
+
+        <select name="status" class="form-control mb-2">
+            <option value="fonctionnel" {% if equipment.status == "fonctionnel" %}selected{% endif %}>Fonctionnel</option>
+            <option value="panne" {% if equipment.status == "panne" %}selected{% endif %}>Panne</option>
+            <option value="maintenance" {% if equipment.status == "maintenance" %}selected{% endif %}>Maintenance</option>
+            <option value="hors_service" {% if equipment.status == "hors_service" %}selected{% endif %}>Hors service</option>
+        </select>
+
+        <select name="availability" class="form-control mb-3">
+            <option value="disponible" {% if equipment.availability == "disponible" %}selected{% endif %}>Disponible</option>
+            <option value="reserve" {% if equipment.availability == "reserve" %}selected{% endif %}>Réservé</option>
+            <option value="utilise" {% if equipment.availability == "utilise" %}selected{% endif %}>Utilisé</option>
+            <option value="indisponible" {% if equipment.availability == "indisponible" %}selected{% endif %}>Indisponible</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">
+            💾 Enregistrer
+        </button>
+
+        <a href="{% url 'equipment_list' %}" class="btn btn-secondary">
+            ⬅ Retour
+        </a>
+
+    </form>
+
+</div>
+{% endblock %}

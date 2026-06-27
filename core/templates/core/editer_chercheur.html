@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Modifier Chercheur</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Nom</label>
+            <input type="text" name="nom" class="form-control" value="{{ chercheur.nom }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Prénom</label>
+            <input type="text" name="prenom" class="form-control" value="{{ chercheur.prenom }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" value="{{ chercheur.email }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Spécialité</label>
+            <input type="text" name="specialite" class="form-control" value="{{ chercheur.specialite }}" required>
+        </div>
+        <button type="submit" class="btn btn-warning">Modifier</button>
+        <a href="{% url 'liste_chercheurs' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+{% endblock %}

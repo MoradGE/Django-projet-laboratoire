@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<h2>Dashboard</h2>
+
+<div class="row">
+
+<div class="col-md-4">
+<div class="card text-center">
+<div class="card-body">
+
+<h1>{{ nb_exp }}</h1>
+
+<p>Expériences</p>
+
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card text-center">
+<div class="card-body">
+
+<h1>{{ nb_pub }}</h1>
+
+<p>Publications</p>
+
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card text-center">
+<div class="card-body">
+
+<h1>{{ nb_res }}</h1>
+
+<p>Résultats</p>
+
+</div>
+</div>
+</div>
+
+</div>
+
+{% endblock %}

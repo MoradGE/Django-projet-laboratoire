@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">
+        Dashboard du Laboratoire
+    </h2>
+
+    <div class="card p-4 shadow">
+
+        <table class="table table-bordered">
+
+            <tr>
+                <th>Total équipements</th>
+                <td>{{ total }}</td>
+            </tr>
+
+            <tr>
+                <th>Disponibles</th>
+                <td>{{ disponibles }}</td>
+            </tr>
+
+            <tr>
+                <th>Réservés</th>
+                <td>{{ reserves }}</td>
+            </tr>
+
+            <tr>
+                <th>En panne</th>
+                <td>{{ panne }}</td>
+            </tr>
+
+            <tr>
+                <th>Maintenance</th>
+                <td>{{ maintenance }}</td>
+            </tr>
+
+        </table>
+
+        <a href="{% url 'equipment_list' %}" class="btn btn-dark mt-2">
+             Voir les équipements
+        </a>
+
+        <a href="{% url 'add_equipment' %}" class="btn btn-success mt-2">
+            ➕ Ajouter équipement
+        </a>
+
+    </div>
+
+</div>
+{% endblock %}

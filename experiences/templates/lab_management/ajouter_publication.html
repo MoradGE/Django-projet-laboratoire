@@ -1,0 +1,101 @@
+{% extends "core/base.html" %}
+{% block content %}
+<style>
+    .container-exp2 {
+        max-width: 760px;
+        padding: 30px;
+        margin: 0 auto;
+    }
+
+    .form-card {
+        background: white;
+        padding: 28px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-card h1 {
+        margin-top: 0;
+        margin-bottom: 22px;
+        color: #0d6efd;
+    }
+
+    .form-group-exp {
+        margin-bottom: 18px;
+    }
+
+    .form-group-exp label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+    }
+
+    .form-group-exp input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 11px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    .actions-exp {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+    }
+
+    .btn-exp {
+        border: 0;
+        border-radius: 6px;
+        padding: 11px 16px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-exp-primary {
+        background: #198754;
+        color: white;
+    }
+
+    .btn-exp-secondary {
+        background: #e5e7eb;
+        color: #1f2937;
+    }
+</style>
+
+<div class="container-exp2">
+    <div class="form-card">
+        <h1>Ajouter Publication</h1>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <div class="form-group-exp">
+                <label for="id_titre">Titre</label>
+                <input type="text" id="id_titre" name="titre" placeholder="Titre de la publication" required>
+            </div>
+
+            <div class="form-group-exp">
+                <label for="id_auteur">Auteur</label>
+                <input type="text" id="id_auteur" name="auteur" placeholder="Nom de l'auteur" required>
+            </div>
+
+            <div class="form-group-exp">
+                <label for="id_date_publication">Date de publication</label>
+                <input type="date" id="id_date_publication" name="date_publication" required>
+            </div>
+
+            <div class="actions-exp">
+                <button type="submit" name="save_action" value="enregistrer" class="btn-exp btn-exp-primary">
+                    Enregistrer
+                </button>
+                <a href="{% url 'experiences_home' %}" class="btn-exp btn-exp-secondary">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

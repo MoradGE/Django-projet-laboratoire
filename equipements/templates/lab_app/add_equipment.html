@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Ajouter un équipement</h2>
+
+    <form method="POST" class="card p-4 shadow">
+        {% csrf_token %}
+        <input type="text" name="name" class="form-control mb-2" placeholder="Nom" required>
+        <input type="text" name="serial_number" class="form-control mb-2" placeholder="Numéro de série" required>
+
+        <select name="status" class="form-control mb-2">
+            <option value="fonctionnel">Fonctionnel</option>
+            <option value="panne">Panne</option>
+            <option value="maintenance">Maintenance</option>
+            <option value="hors_service">Hors service</option>
+        </select>
+
+        <select name="availability" class="form-control mb-3">
+            <option value="disponible">Disponible</option>
+            <option value="reserve">Réservé</option>
+            <option value="utilise">Utilisé</option>
+            <option value="indisponible">Indisponible</option>
+        </select>
+
+        <button type="submit" class="btn btn-success">Ajouter</button>
+        <a href="{% url 'equipment_list' %}" class="btn btn-secondary mt-2">Retour à la liste</a>
+    </form>
+</div>
+{% endblock %}

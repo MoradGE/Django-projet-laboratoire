@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h1 class="h4 mb-0">Détail de la réservation</h1>
+                    <span class="badge bg-info text-dark">{{ reservation.get_statut_display }}</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="h5 text-primary">{{ reservation.materiel.nom }}</h2>
+                    <p class="text-muted">{{ reservation.materiel.reference }} - {{ reservation.materiel.laboratoire }}</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Demandeur :</strong> {{ reservation.demandeur }}</p>
+                            <p><strong>Email :</strong> {{ reservation.email_demandeur }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Début :</strong> {{ reservation.date_debut|date:"d/m/Y H:i" }}</p>
+                            <p><strong>Fin :</strong> {{ reservation.date_fin|date:"d/m/Y H:i" }}</p>
+                        </div>
+                    </div>
+
+                    <p><strong>Motif :</strong></p>
+                    <p class="border rounded p-3 bg-light">{{ reservation.motif }}</p>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <form method="post" action="{% url 'changer_statut_reservation' reservation.id 'validee' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-sm">Valider</button>
+                        </form>
+                        <form method="post" action="{% url 'changer_statut_reservation' reservation.id 'terminee' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-primary btn-sm">Terminer</button>
+                        </form>
+                        <form method="post" action="{% url 'changer_statut_reservation' reservation.id 'annulee' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Annuler</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{% url 'liste_reservations_materiel' %}" class="btn btn-secondary btn-sm">Retour aux réservations</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+
+{% block title %}Responsables{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div>
+        {% if laboratoire %}
+            <h1 class="h3 mb-1">Responsables de {{ laboratoire.nom_laboratoire }}</h1>
+            <p class="text-muted mb-0">Responsables lies a ce laboratoire.</p>
+        {% else %}
+            <h1 class="h3 mb-1">Responsables</h1>
+            <p class="text-muted mb-0">Liste des responsables enregistres.</p>
+        {% endif %}
+    </div>
+    <a class="btn btn-primary" href="{% url 'responsable_create' %}{% if laboratoire %}?laboratoire={{ laboratoire.pk }}{% endif %}">Ajouter</a>
+</div>
+
+<div class="section-panel">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Telephone</th>
+                    <th>Fonction</th>
+                    <th>Laboratoire</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for responsable in responsables %}
+                    <tr>
+                        <td>{{ responsable.prenom }} {{ responsable.nom }}</td>
+                        <td>{{ responsable.email }}</td>
+                        <td>{{ responsable.telephone }}</td>
+                        <td>{{ responsable.fonction }}</td>
+                        <td>
+                            <a href="{% url 'laboratoire_detail' responsable.laboratoire.pk %}">
+                                {{ responsable.laboratoire.nom_laboratoire }}
+                            </a>
+                        </td>
+                        <td class="text-end table-actions">
+                            <a class="btn btn-outline-secondary btn-sm" href="{% url 'responsable_update' responsable.pk %}">Modifier</a>
+                            <a class="btn btn-outline-danger btn-sm" href="{% url 'responsable_delete' responsable.pk %}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">Aucun responsable enregistre.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

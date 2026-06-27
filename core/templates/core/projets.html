@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Projets de Recherche</h2>
+            <form method="GET" class="row g-2 mb-3">
+                <div class="col-md-6">
+                    <input type="text" name="q" class="form-control" placeholder="Rechercher par titre..." value="{{ query }}">
+                </div>
+                <div class="col-md-4">
+                    <select name="statut" class="form-select">
+                        <option value="">Tous les statuts</option>
+                        <option value="planifie" {% if statut == 'planifie' %}selected{% endif %}>Planifié</option>
+                        <option value="en_cours" {% if statut == 'en_cours' %}selected{% endif %}>En cours</option>
+                        <option value="suspendu" {% if statut == 'suspendu' %}selected{% endif %}>Suspendu</option>
+                        <option value="termine" {% if statut == 'termine' %}selected{% endif %}>Terminé</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Filtrer</button>
+                </div>
+            </form>
+        <a href="{% url 'creer_projet' %}" class="btn btn-primary">+ Nouveau Projet</a>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Titre</th>
+                <th>Statut</th>
+                <th>Date Début</th>
+                <th>Date Fin</th>
+                <th>Budget</th>
+                <th>Chercheurs</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in projets %}
+            <tr>
+                <td>{{ p.titre }}</td>
+                <td>
+                    {% if p.statut == 'en_cours' %}<span class="badge bg-success">En cours</span>
+                    {% elif p.statut == 'termine' %}<span class="badge bg-secondary">Terminé</span>
+                    {% elif p.statut == 'suspendu' %}<span class="badge bg-danger">Suspendu</span>
+                    {% else %}<span class="badge bg-warning text-dark">Planifié</span>
+                    {% endif %}
+                </td>
+                <td>{{ p.date_debut }}</td>
+                <td>{{ p.date_fin|default:"-" }}</td>
+                <td>{{ p.budget|floatformat:0 }} MAD</td>
+                <td>
+                    {% for c in p.chercheurs.all %}
+                        {{ c.prenom }} {{ c.nom }} ({{ c.specialite }}){% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        -
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{% url 'detail_projet' p.id %}" class="btn btn-sm btn-info">Voir</a>
+                    <a href="{% url 'editer_projet' p.id %}" class="btn btn-sm btn-warning">Modifier</a>
+                    <a href="{% url 'eliminer_projet' p.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce projet ?')">Supprimer</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" class="text-center">Aucun projet pour le moment</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

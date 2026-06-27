@@ -1,0 +1,49 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Nouveau Projet</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Titre</label>
+            <input type="text" name="titre" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="4" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Statut</label>
+            <select name="statut" class="form-select">
+                <option value="planifie">Planifié</option>
+                <option value="en_cours">En cours</option>
+                <option value="suspendu">Suspendu</option>
+                <option value="termine">Terminé</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date Début</label>
+            <input type="date" name="date_debut" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date Fin (optionnel)</label>
+            <input type="date" name="date_fin" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Budget (optionnel)</label>
+            <input type="number" name="budget" class="form-control" step="0.01">
+        </div>
+        <div class="mb-3">
+    <label class="form-label">Chercheurs assignés</label>
+            <select name="chercheurs" class="form-select" multiple>
+        {% for c in chercheurs %}
+                <option value="{{ c.id }}">{{ c.prenom }} {{ c.nom }} — {{ c.specialite }}</option>
+        {% endfor %}
+            </select>
+            <small class="text-muted">Ctrl+clic pour sélectionner plusieurs</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Créer</button>
+        <a href="{% url 'liste_projets' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+{% endblock %}
